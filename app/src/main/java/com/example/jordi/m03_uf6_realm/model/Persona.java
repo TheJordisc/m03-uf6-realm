@@ -1,8 +1,11 @@
 package com.example.jordi.m03_uf6_realm.model;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import io.realm.RealmObject;
@@ -10,30 +13,22 @@ import io.realm.annotations.PrimaryKey;
 
 public class Persona extends RealmObject {
 
-    public enum Genere {
-        M,
-        F
-    }
-
     @PrimaryKey
     private String dni;
     private String nom;
     private String cognom;
-    private Genere genere;
-    private Calendar dataNaixement;
-    private Locale nacionalitat;
-
+    private String genere;
+    private Date dataNaixement;
 
     public Persona() {
 
     }
 
-    public Persona(String nom, String cognom, Genere genere, Calendar dataNaixement, Locale nacionalitat) {
+    public Persona(String nom, String cognom, String genere, Date dataNaixement) {
         this.nom = nom;
         this.cognom = cognom;
         this.genere = genere;
         this.dataNaixement = dataNaixement;
-        this.nacionalitat = nacionalitat;
     }
 
     public String getNom() {
@@ -52,39 +47,42 @@ public class Persona extends RealmObject {
         this.cognom = cognom;
     }
 
-    public Genere getGenere() {
+    public String getGenere() {
         return genere;
     }
 
-    public void setGenere(Genere genere) {
+    public void setGenere(String genere) {
         this.genere = genere;
     }
 
-    public Calendar getDataNaixement() {
+    public Date getDataNaixement() {
         return dataNaixement;
     }
 
-    public void setDataNaixement(Calendar dataNaixement) {
+    public void setDataNaixement(Date dataNaixement) {
         this.dataNaixement = dataNaixement;
     }
 
     public int getEdat() {
-        Calendar today = Calendar.getInstance();
+        Date date1 = dataNaixement;
+        Date date2 = Calendar.getInstance().getTime();
+        Calendar cal1 = new GregorianCalendar(),cal2 = new GregorianCalendar();
+        cal1.setTime(date1);
+        cal2.setTime(date2);
 
-        int age = today.get(Calendar.YEAR) - dataNaixement.get(Calendar.YEAR);
-
-        if (today.get(Calendar.DAY_OF_YEAR) < dataNaixement.get(Calendar.DAY_OF_YEAR)){
-            age--;
+        int factor=0;
+        if(cal2.get(Calendar.DAY_OF_YEAR) < cal1.get(Calendar.DAY_OF_YEAR)) {
+            factor = -1;
         }
 
-        return age;
+        return cal2.get(Calendar.YEAR) - cal1.get(Calendar.YEAR) + factor;
     }
 
-    public Locale getNacionalitat() {
-        return nacionalitat;
+    public String getDni() {
+        return dni;
     }
 
-    public void setNacionalitat(Locale nacionalitat) {
-        this.nacionalitat = nacionalitat;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 }

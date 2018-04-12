@@ -8,9 +8,12 @@ import com.example.jordi.m03_uf6_realm.model.Persona;
 
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,18 +22,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Realm.init(this);
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
+        Realm.setDefaultConfiguration(realmConfiguration);
+
         Realm realm = Realm.getDefaultInstance();
 
         realm.beginTransaction();
 
-        Persona persona = realm.createObject(Persona.class);
+        Persona persona = new Persona();
         persona.setNom("Jordi");
         persona.setCognom("Solà Ceada");
-        persona.setGenere(Persona.Genere.M);
-        persona.setNacionalitat(new Locale("es", "ES"));
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(1992,12,30);
-        persona.setDataNaixement(calendar);
+        persona.setGenere("M");
+        persona.setDataNaixement(new GregorianCalendar(1992 + 1900, 12, 30).getTime());
+
+        realm.createObject(Persona.class, persona.getDni());
+
 
         realm.commitTransaction();
     }
