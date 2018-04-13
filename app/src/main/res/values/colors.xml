@@ -9,4 +9,6 @@
     <color name="secondaryDarkColor">#38006b</color>
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#ffffff</color>
+    <color name="color_red_remove">#d50000</color>
+
 </resources>
