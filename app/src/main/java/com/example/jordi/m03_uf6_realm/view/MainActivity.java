@@ -10,20 +10,26 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.jordi.m03_uf6_realm.R;
-import com.example.jordi.m03_uf6_realm.adapters.RealmRecyclerViewAdapter;
+import com.example.jordi.m03_uf6_realm.adapters.MyRecyclerViewAdapter;
 import com.example.jordi.m03_uf6_realm.model.Persona;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 
+import io.realm.OrderedCollectionChangeSet;
+import io.realm.OrderedRealmCollectionChangeListener;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView rv;
+    private List<Persona> itemList;
+    MyRecyclerViewAdapter adapter;
+    Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +39,56 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Realm.init(this);
+
+        realm = Realm.getDefaultInstance();
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.deleteAll();
+                Persona obj1 = realm.createObject(Persona.class,"454545B");
+//                obj1.setDni("45454545B");
+                obj1.setNom("Jordi");
+                obj1.setCognom("Solà Ceada");
+                obj1.setGenere("M");
+                obj1.setDataNaixement(new GregorianCalendar(1992 + 1900, 12, 30).getTime());
+
+//                sona2 = realm.createObject(Persona.class,"585445");
+//                persona2.setDni("5265358G");
+//                persona2.setNom("Jordi");
+//                persona2.setCognom("Solà Ceada");
+//                persona2.setGenere("M");
+//                persona2.setDataNaixement(new GregorianCalendar(1992 + 1900, 12, 30).getTime());
+//
+//                realm.copyToRealmOrUpdate(persona);
+//                realm.copyToRealmOrUpdate(persona2);
+            }
+        });
+
         rv= findViewById(R.id.recyclerView);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        //rv.setAdapter()
+
+        itemList = new ArrayList<>();
+
+        Persona results2 = realm.where(Persona.class).findFirst();
+        System.out.println(results2);
+
+
+        RealmResults<Persona> results = realm.where(Persona.class).findAll();
+        itemList.addAll(results);
+
+        adapter = new MyRecyclerViewAdapter(results);
+        rv.setAdapter(adapter);
+
+        realm.where(Persona.class).findAll().addChangeListener(new OrderedRealmCollectionChangeListener<RealmResults<Persona>>() {
+            @Override
+            public void onChange(RealmResults<Persona> personas, OrderedCollectionChangeSet changeSet) {
+                itemList.clear();
+                itemList.addAll(personas);
+                adapter.notifyDataSetChanged();
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -45,28 +98,6 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
-
-        Realm.init(this);
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
-        Realm.setDefaultConfiguration(realmConfiguration);
-
-        Realm realm = Realm.getDefaultInstance();
-
-        realm.beginTransaction();
-
-        realm.deleteAll();
-        Persona persona = new Persona();
-        persona.setDni("45454545B");
-        persona.setNom("Jordi");
-        persona.setCognom("Solà Ceada");
-        persona.setGenere("M");
-        persona.setDataNaixement(new GregorianCalendar(1992 + 1900, 12, 30).getTime());
-
-        realm.createObject(Persona.class, persona.getDni());
-
-
-        realm.commitTransaction();
     }
 
     @Override
@@ -90,4 +121,28 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+//    private void setDB() {
+//        realm.beginTransaction();
+//
+//        realm.deleteAll();
+//        Persona persona = new Persona();
+//        persona.setDni("45454545B");
+//        persona.setNom("Jordi");
+//        persona.setCognom("Solà Ceada");
+//        persona.setGenere("M");
+//        persona.setDataNaixement(new GregorianCalendar(1992 + 1900, 12, 30).getTime());
+//
+//        Persona persona2 = new Persona();
+//        persona2.setDni("5265358G");
+//        persona2.setNom("Jordi");
+//        persona2.setCognom("Solà Ceada");
+//        persona2.setGenere("M");
+//        persona2.setDataNaixement(new GregorianCalendar(1992 + 1900, 12, 30).getTime());
+//
+//        realm.createObject(Persona.class, persona.getDni());
+//        realm.createObject(Persona.class, persona2.getDni());
+//
+//        realm.commitTransaction();
+//    }
 }
