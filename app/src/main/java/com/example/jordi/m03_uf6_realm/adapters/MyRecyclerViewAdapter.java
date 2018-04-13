@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.example.jordi.m03_uf6_realm.R;
@@ -54,6 +53,14 @@ public class MyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Persona, MyR
         final Persona obj = getItem(position);
 
         holder.contactName.setText(obj.getNom());
+        holder.contactSurname.setText(obj.getCognom());
+        holder.contactDNI.setText(obj.getDni());
+        if (obj.getGenere().equals("M"))
+            holder.contactGenere.setText("Home");
+        else {
+            holder.contactGenere.setText("Dona");
+        }
+        holder.contactDataNaixement.setText(obj.getEdat() + " anys");
 
     }
 
@@ -68,6 +75,9 @@ public class MyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Persona, MyR
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView contactName;
         TextView contactSurname;
+        TextView contactDNI;
+        TextView contactGenere;
+        TextView contactDataNaixement;
         AppCompatImageButton editButton;
         AppCompatImageButton deleteButton;
 
@@ -75,6 +85,9 @@ public class MyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Persona, MyR
             super(view);
             contactName = view.findViewById(R.id.contact_name);
             contactSurname = view.findViewById(R.id.contact_surname);
+            contactDNI = view.findViewById(R.id.contact_dni);
+            contactGenere = view.findViewById(R.id.contact_genere);
+            contactDataNaixement= view.findViewById(R.id.contact_data_naixement);
             editButton = view.findViewById(R.id.edit_button);
             deleteButton = view.findViewById(R.id.delete_button);
         }

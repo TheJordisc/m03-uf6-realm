@@ -47,22 +47,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void execute(Realm realm) {
                 realm.deleteAll();
-                Persona obj1 = realm.createObject(Persona.class,"454545B");
-//                obj1.setDni("45454545B");
+                Persona obj1 = realm.createObject(Persona.class,"4545485B");
                 obj1.setNom("Jordi");
-                obj1.setCognom("Solà Ceada");
+                obj1.setCognom("Solà");
                 obj1.setGenere("M");
-                obj1.setDataNaixement(new GregorianCalendar(1992 + 1900, 12, 30).getTime());
+                obj1.setDataNaixement(new GregorianCalendar(1992, 12, 30).getTime());
 
-//                sona2 = realm.createObject(Persona.class,"585445");
-//                persona2.setDni("5265358G");
-//                persona2.setNom("Jordi");
-//                persona2.setCognom("Solà Ceada");
-//                persona2.setGenere("M");
-//                persona2.setDataNaixement(new GregorianCalendar(1992 + 1900, 12, 30).getTime());
-//
-//                realm.copyToRealmOrUpdate(persona);
-//                realm.copyToRealmOrUpdate(persona2);
+                Persona obj2 = realm.createObject(Persona.class,"6432545F");
+                obj2.setNom("Alejandro");
+                obj2.setCognom("Berdún");
+                obj2.setGenere("M");
+                obj2.setDataNaixement(new GregorianCalendar(1982, 1, 22).getTime());
             }
         });
 
