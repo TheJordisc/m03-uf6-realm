@@ -1,15 +1,19 @@
 package com.example.jordi.m03_uf6_realm.view;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.jordi.m03_uf6_realm.R;
 import com.example.jordi.m03_uf6_realm.adapters.MyRecyclerViewAdapter;
@@ -32,11 +36,11 @@ public class MainActivity extends AppCompatActivity {
     Realm realm;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Realm.init(this);
@@ -110,12 +114,36 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.filter_button) {
+            CharSequence colors[] = new CharSequence[] {"2 edats", "> gran edat", "< edat", "genere"};
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Selecciona una opció per listar");
+            builder.setItems(colors, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case 0:
+
+                            break;
+                        case 1:
+
+                            break;
+                        case 2:
+
+                            break;
+                        case 3:
+
+                            break;
+                    }
+                }
+            });
+            builder.show();
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 
 //    private void setDB() {
 //        realm.beginTransaction();

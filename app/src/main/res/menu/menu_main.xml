@@ -3,10 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.jordi.test.MainActivity">
     <item
-        android:id="@+id/action_search"
-        android:icon="@drawable/ic_filter_list_white_24dp"
+        android:id="@+id/filter_button"
         android:orderInCategory="100"
-        android:title="Filtrar"
-        app:showAsAction="always"
-        app:actionViewClass="android.support.v7.widget.SearchView" />
+        android:title="Item"
+        android:icon="@drawable/ic_filter_list_white_24dp"
+        app:showAsAction="always" />
 </menu>
