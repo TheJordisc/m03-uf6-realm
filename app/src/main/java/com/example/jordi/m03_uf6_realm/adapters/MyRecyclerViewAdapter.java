@@ -18,7 +18,6 @@ import io.realm.RealmRecyclerViewAdapter;
 
 public class MyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Persona, MyRecyclerViewAdapter.MyViewHolder> {
 
-    private boolean inDeletionMode = false;
     private Set<Integer> countersToDelete = new HashSet<>();
 
     public MyRecyclerViewAdapter(OrderedRealmCollection<Persona> data) {
@@ -28,18 +27,6 @@ public class MyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Persona, MyR
         // See https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#hasStableIds()
         // See https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#getItemId(int)
         setHasStableIds(true);
-    }
-
-    void enableDeletionMode(boolean enabled) {
-        inDeletionMode = enabled;
-        if (!enabled) {
-            countersToDelete.clear();
-        }
-        notifyDataSetChanged();
-    }
-
-    Set<Integer> getCountersToDelete() {
-        return countersToDelete;
     }
 
     @Override
@@ -64,13 +51,10 @@ public class MyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Persona, MyR
 
     }
 
-//    @Override
-//    public long getItemId(int index) {
-//        //noinspection ConstantConditions
-//        return getItem(index).getDni();
-//    }
-
-
+    @Override
+    public int getItemCount() {
+        return super.getData().size();
+    }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView contactName;

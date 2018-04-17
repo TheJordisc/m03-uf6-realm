@@ -15,6 +15,7 @@ public class Persona extends RealmObject {
     private String cognom;
     private String genere;
     private Date dataNaixement;
+    private int edat;
 
     public Persona() {
 
@@ -25,6 +26,7 @@ public class Persona extends RealmObject {
         this.cognom = cognom;
         this.genere = genere;
         this.dataNaixement = dataNaixement;
+
     }
 
     public String getNom() {
@@ -60,6 +62,10 @@ public class Persona extends RealmObject {
     }
 
     public int getEdat() {
+        return this.edat;
+    }
+
+    public void setEdat() {
         Date date1 = dataNaixement;
         Date date2 = Calendar.getInstance().getTime();
         Calendar cal1 = new GregorianCalendar(),cal2 = new GregorianCalendar();
@@ -71,7 +77,7 @@ public class Persona extends RealmObject {
             factor = -1;
         }
 
-        return cal2.get(Calendar.YEAR) - cal1.get(Calendar.YEAR) + factor;
+        this.edat = cal2.get(Calendar.YEAR) - cal1.get(Calendar.YEAR) + factor;
     }
 
     public String getDni() {
