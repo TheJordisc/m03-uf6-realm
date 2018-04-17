@@ -14,11 +14,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import io.realm.OrderedRealmCollection;
+import io.realm.Realm;
 import io.realm.RealmRecyclerViewAdapter;
+import io.realm.RealmResults;
 
 public class MyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Persona, MyRecyclerViewAdapter.MyViewHolder> {
 
     private Set<Integer> countersToDelete = new HashSet<>();
+    Realm realm;
 
     public MyRecyclerViewAdapter(OrderedRealmCollection<Persona> data) {
         super(data, true);
@@ -36,7 +39,7 @@ public class MyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Persona, MyR
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         final Persona obj = getItem(position);
 
         holder.contactName.setText(obj.getNom());
@@ -48,6 +51,34 @@ public class MyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Persona, MyR
             holder.contactGenere.setText("Dona");
         }
         holder.contactDataNaixement.setText(obj.getEdat() + " anys");
+
+        realm = Realm.getDefaultInstance();
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        RealmResults<Persona> result = realm.where(Persona.class).findAll();
+                        result.deleteFromRealm(position);
+                    }
+                });
+            }
+        });
+
+        holder.editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+
+                        Persona persona = MyRecyclerViewAdapter.super.getItem(position);
+                        //Intent editPersona = new Intent(MyRecyclerViewAdapter.this, ActivityNewContact.class)
+                    }
+                });
+            }
+        });
 
     }
 
