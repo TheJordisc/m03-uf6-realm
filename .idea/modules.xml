@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/m03-uf6-realm.iml" filepath="$PROJECT_DIR$/m03-uf6-realm.iml" />
       <module fileurl="file://F:\DAM\ANDROID\AndroidStudioProjects\m03uf6realm\m03-uf6-realm.iml" filepath="F:\DAM\ANDROID\AndroidStudioProjects\m03uf6realm\m03-uf6-realm.iml" />
       <module fileurl="file://$PROJECT_DIR$/m03uf6realm.iml" filepath="$PROJECT_DIR$/m03uf6realm.iml" />
     </modules>

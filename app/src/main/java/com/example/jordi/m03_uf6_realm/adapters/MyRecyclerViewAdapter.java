@@ -1,5 +1,7 @@
 package com.example.jordi.m03_uf6_realm.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +11,8 @@ import android.widget.TextView;
 
 import com.example.jordi.m03_uf6_realm.R;
 import com.example.jordi.m03_uf6_realm.model.Persona;
+import com.example.jordi.m03_uf6_realm.view.ActivityNewContact;
+import com.example.jordi.m03_uf6_realm.view.MainActivity;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,15 +25,17 @@ import io.realm.RealmResults;
 public class MyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Persona, MyRecyclerViewAdapter.MyViewHolder> {
 
     private Set<Integer> countersToDelete = new HashSet<>();
+    Context contextMainActivity;
     Realm realm;
 
-    public MyRecyclerViewAdapter(OrderedRealmCollection<Persona> data) {
+    public MyRecyclerViewAdapter(OrderedRealmCollection<Persona> data, Context applicationContext) {
         super(data, true);
         // Only set this if the model class has a primary key that is also a integer or long.
         // In that case, {@code getItemId(int)} must also be overridden to return the key.
         // See https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#hasStableIds()
         // See https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#getItemId(int)
         setHasStableIds(true);
+        this.contextMainActivity=applicationContext;
     }
 
     @Override
@@ -72,9 +78,10 @@ public class MyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Persona, MyR
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-
                         Persona persona = MyRecyclerViewAdapter.super.getItem(position);
-                        //Intent editPersona = new Intent(MyRecyclerViewAdapter.this, ActivityNewContact.class)
+                        Intent editPersona = new Intent(contextMainActivity, ActivityNewContact.class);
+                        editPersona.putExtra("persona",persona);
+                        editPersona.putExtra("new",false);
                     }
                 });
             }

@@ -32,7 +32,6 @@ import io.realm.Realm;
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView rv;
-    private List<Persona> itemList;
     OrderedRealmCollection<Persona> dataset;
     MyRecyclerViewAdapter adapter;
     Realm realm;
@@ -78,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         filterDuesEdatsApplyButton = findViewById(R.id.filter_dues_edats_apply_button);
         edatMinimaEdit = findViewById(R.id.edat_minima);
         edatMaximaEdit = findViewById(R.id.edat_maxima);
-
 
         radioGroupMajorMenor = findViewById(R.id.radio_group_major_menor);
         radioButtonMajor = findViewById(R.id.radio_button_major);
@@ -127,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
         dataset = realm.where(Persona.class).findAll();
 
-        adapter = new MyRecyclerViewAdapter(dataset);
+        adapter = new MyRecyclerViewAdapter(dataset,MainActivity.this);
         rv.setAdapter(adapter);
 
 //        realm.where(Persona.class).findAll().addChangeListener(new OrderedRealmCollectionChangeListener<RealmResults<Persona>>() {
@@ -145,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, ActivityNewContact.class);
                 startActivity(intent);
+                intent.putExtra("new",true);
             }
         });
     }

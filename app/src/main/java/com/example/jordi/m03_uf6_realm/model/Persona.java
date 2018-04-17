@@ -1,5 +1,6 @@
 package com.example.jordi.m03_uf6_realm.model;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -7,7 +8,7 @@ import java.util.GregorianCalendar;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Persona extends RealmObject {
+public class Persona extends RealmObject implements Serializable {
 
     @PrimaryKey
     private String dni;
