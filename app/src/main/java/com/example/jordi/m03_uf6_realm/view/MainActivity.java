@@ -1,5 +1,6 @@
 package com.example.jordi.m03_uf6_realm.view;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int CREATE_PERSON = 1234;
     RecyclerView rv;
     OrderedRealmCollection<Persona> dataset;
     MyRecyclerViewAdapter adapter;
@@ -142,8 +144,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, ActivityNewContact.class);
-                startActivity(intent);
-                intent.putExtra("new",true);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("new",true);
+                intent.putExtras(bundle);
+                startActivityForResult(intent,CREATE_PERSON);
             }
         });
     }
@@ -308,4 +312,15 @@ public class MainActivity extends AppCompatActivity {
 //
 //        realm.commitTransaction();
 //    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1234 && resultCode == Activity.RESULT_OK) {
+            dataset.clear();
+            dataset.addAll(realm.where(Persona.class).findAll());
+            adapter.notifyDataSetChanged();
+        }
+    }
 }

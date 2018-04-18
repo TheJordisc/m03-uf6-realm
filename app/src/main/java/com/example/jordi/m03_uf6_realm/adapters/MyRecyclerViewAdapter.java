@@ -2,6 +2,7 @@ package com.example.jordi.m03_uf6_realm.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -80,8 +81,11 @@ public class MyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Persona, MyR
                     public void execute(Realm realm) {
                         Persona persona = MyRecyclerViewAdapter.super.getItem(position);
                         Intent editPersona = new Intent(contextMainActivity, ActivityNewContact.class);
-                        editPersona.putExtra("persona",persona);
-                        editPersona.putExtra("new",false);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("persona",realm.copyFromRealm(persona));
+                        bundle.putBoolean("new",false);
+                        editPersona.putExtras(bundle);
+                        contextMainActivity.startActivity(editPersona);
                     }
                 });
             }
