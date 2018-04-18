@@ -12,7 +12,7 @@ import com.example.jordi.m03_uf6_realm.model.Persona;
 
 public class ActivityNewContact extends AppCompatActivity {
     TextInputEditText dni, nom, cognoms, genere;
-    boolean newPersona = getIntent().getBooleanExtra("new",false);
+    boolean isNewPersona;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,20 +21,24 @@ public class ActivityNewContact extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (newPersona){
-            toolbar.setTitle("Editar un contacte existent");
+        isNewPersona = getIntent().getBooleanExtra("new",false);
+
+        dni = findViewById(R.id.dni);
+        nom = findViewById(R.id.nom);
+        cognoms = findViewById(R.id.cognoms);
+        genere = findViewById(R.id.genere);
+
+        if (isNewPersona){
+            toolbar.setTitle("Crear contacte");
             Persona persona = (Persona) getIntent().getSerializableExtra("persona");
-            dni = findViewById(R.id.dni);
-            nom = findViewById(R.id.nom);
-            cognoms = findViewById(R.id.cognoms);
-            genere = findViewById(R.id.genere);
 
             dni.setText(persona.getDni());
             nom.setText(persona.getNom());
             cognoms.setText(persona.getCognom());
             genere.setText(persona.getGenere().toUpperCase());
         }else{
-            toolbar.setTitle("Afegir un nou contacte");
+            toolbar.setTitle("Editar contacte");
+            dni.setEnabled(false);
         }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
