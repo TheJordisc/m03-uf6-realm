@@ -32,7 +32,7 @@ import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int CREATE_PERSON = 1234;
+    private static final int CREATE_PERSON = 5236;
     RecyclerView rv;
     OrderedRealmCollection<Persona> dataset;
     MyRecyclerViewAdapter adapter;
@@ -119,6 +119,20 @@ public class MainActivity extends AppCompatActivity {
                 p3.setGenere("F");
                 p3.setDataNaixement(new GregorianCalendar(1972, 1, 22).getTime());
                 p3.setEdat();
+
+                Persona p4 = realm.createObject(Persona.class,"2356258G");
+                p4.setNom("Brian");
+                p4.setCognom("Adalid");
+                p4.setGenere("M");
+                p4.setDataNaixement(new GregorianCalendar(2000, 3, 10).getTime());
+                p4.setEdat();
+
+                Persona p5 = realm.createObject(Persona.class,"2116844J");
+                p5.setNom("Cristina");
+                p5.setCognom("Adrián");
+                p5.setGenere("F");
+                p5.setDataNaixement(new GregorianCalendar(1992, 5, 36).getTime());
+                p5.setEdat();
             }
         });
 
@@ -128,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
         dataset = realm.where(Persona.class).findAll();
 
         adapter = new MyRecyclerViewAdapter(dataset,MainActivity.this);
+        adapter.setHasStableIds(false);
         rv.setAdapter(adapter);
 
 //        realm.where(Persona.class).findAll().addChangeListener(new OrderedRealmCollectionChangeListener<RealmResults<Persona>>() {
@@ -168,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.filter_button) {
-            CharSequence colors[] = new CharSequence[] {"Entre 2 edats", "Major o menor que una edat", "Segons gènere"};
+            CharSequence colors[] = new CharSequence[] {"Entre 2 edats", "Major o menor que una edat", "Segons gènere", "Mostrar tots"};
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Selecciona una opció per a filtrar:");
@@ -188,6 +203,9 @@ public class MainActivity extends AppCompatActivity {
                             hideAllFilterLayouts();
                             filterGenere();
                             break;
+                        case 3:
+                            hideAllFilterLayouts();
+                            filterShowAll();
                     }
                 }
             });
@@ -202,6 +220,12 @@ public class MainActivity extends AppCompatActivity {
                 filterLayouts) {
             l.setVisibility(View.GONE);
         }
+    }
+
+    private void filterShowAll() {
+        dataset = realm.where(Persona.class).findAll();
+        adapter.updateData(dataset);
+        adapter.notifyDataSetChanged();
     }
 
     private void filterGenere() {
@@ -317,10 +341,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1234 && resultCode == Activity.RESULT_OK) {
-            dataset.clear();
-            dataset.addAll(realm.where(Persona.class).findAll());
+        if (requestCode == CREATE_PERSON && resultCode == Activity.RESULT_OK) {
+            adapter.updateData(realm.where(Persona.class).findAll());
             adapter.notifyDataSetChanged();
+            System.out.println("kshfojshogfhgfs");
         }
     }
 }

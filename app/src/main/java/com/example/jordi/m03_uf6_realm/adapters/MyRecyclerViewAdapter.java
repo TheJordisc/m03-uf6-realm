@@ -24,6 +24,7 @@ import io.realm.RealmRecyclerViewAdapter;
 import io.realm.RealmResults;
 
 public class MyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Persona, MyRecyclerViewAdapter.MyViewHolder> {
+    private static final int CREATE_PERSON = 5236;
 
     private Set<Integer> countersToDelete = new HashSet<>();
     Context contextMainActivity;
@@ -35,7 +36,7 @@ public class MyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Persona, MyR
         // In that case, {@code getItemId(int)} must also be overridden to return the key.
         // See https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#hasStableIds()
         // See https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#getItemId(int)
-        setHasStableIds(true);
+        //setHasStableIds(true);
         this.contextMainActivity=applicationContext;
     }
 
@@ -85,7 +86,7 @@ public class MyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Persona, MyR
                         bundle.putSerializable("persona",realm.copyFromRealm(persona));
                         bundle.putBoolean("new",false);
                         editPersona.putExtras(bundle);
-                        contextMainActivity.startActivity(editPersona);
+                        ((MainActivity) contextMainActivity).startActivityForResult(editPersona,CREATE_PERSON);
                     }
                 });
             }

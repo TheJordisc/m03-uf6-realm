@@ -79,5 +79,24 @@
                 android:layout_weight="1"
                 android:text="Home" />
         </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="18sp"
+            android:paddingStart="4dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
+            android:layout_height="wrap_content"
+            android:text="Data de naixement"/>
+        <Button
+            android:id="@+id/birthday_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_event_white_24dp"
+            android:drawablePadding="8dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:textColor="@android:color/white"
+            android:text="30/12/1992"
+            android:contentDescription="Birthdate" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
