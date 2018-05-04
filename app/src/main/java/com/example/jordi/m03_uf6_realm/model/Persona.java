@@ -1,11 +1,15 @@
 package com.example.jordi.m03_uf6_realm.model;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
 
 public class Persona extends RealmObject implements Serializable {
@@ -16,7 +20,9 @@ public class Persona extends RealmObject implements Serializable {
     private String cognom;
     private String genere;
     private Date dataNaixement;
+    @Index
     private int edat;
+    private int numAstral;
 
     public Persona() {
 
@@ -87,5 +93,25 @@ public class Persona extends RealmObject implements Serializable {
 
     public void setDni(String dni) {
         this.dni = dni;
+    }
+
+    public int getNumAstral() {
+        return numAstral;
+    }
+
+    public void setNumAstral() {
+
+        this.numAstral = calculateNumAstral(getDataNaixement());
+    }
+
+    public static int calculateNumAstral(Date date) {
+        DateFormat df = new SimpleDateFormat("ddMMyyyy", Locale.getDefault());
+        String reportDate = df.format(date);
+        int numAstral=0;
+        for (char num :
+                reportDate.toCharArray()) {
+            numAstral+= Integer.parseInt(String.valueOf(num));
+        }
+        return numAstral;
     }
 }

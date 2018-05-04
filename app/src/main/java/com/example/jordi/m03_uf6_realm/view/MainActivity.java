@@ -21,6 +21,7 @@ import android.widget.RadioGroup;
 
 import com.example.jordi.m03_uf6_realm.R;
 import com.example.jordi.m03_uf6_realm.adapters.MyRecyclerViewAdapter;
+import com.example.jordi.m03_uf6_realm.database.MyMigration;
 import com.example.jordi.m03_uf6_realm.model.Persona;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import java.util.List;
 
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -93,6 +95,14 @@ public class MainActivity extends AppCompatActivity {
 
         Realm.init(this);
 
+
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .schemaVersion(1) // Must be bumped when the schema changes
+                .migration(new MyMigration()) // Migration to run instead of throwing an exception
+                .build();
+
+        Realm.setDefaultConfiguration(config);
+
         realm = Realm.getDefaultInstance();
 
         realm.executeTransaction(new Realm.Transaction() {
@@ -105,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 p1.setGenere("M");
                 p1.setDataNaixement(new GregorianCalendar(1992, 12, 30).getTime());
                 p1.setEdat();
+                p1.setNumAstral();
 
                 Persona p2 = realm.createObject(Persona.class,"6432545F");
                 p2.setNom("Alejandro");
@@ -112,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 p2.setGenere("M");
                 p2.setDataNaixement(new GregorianCalendar(1982, 1, 22).getTime());
                 p2.setEdat();
+                p2.setNumAstral();
 
                 Persona p3 = realm.createObject(Persona.class,"5663454H");
                 p3.setNom("María");
@@ -119,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 p3.setGenere("F");
                 p3.setDataNaixement(new GregorianCalendar(1972, 1, 22).getTime());
                 p3.setEdat();
+                p3.setNumAstral();
 
                 Persona p4 = realm.createObject(Persona.class,"2356258G");
                 p4.setNom("Brian");
@@ -126,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 p4.setGenere("M");
                 p4.setDataNaixement(new GregorianCalendar(2000, 3, 10).getTime());
                 p4.setEdat();
+                p4.setNumAstral();
 
                 Persona p5 = realm.createObject(Persona.class,"2116844J");
                 p5.setNom("Cristina");
@@ -133,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
                 p5.setGenere("F");
                 p5.setDataNaixement(new GregorianCalendar(1992, 5, 36).getTime());
                 p5.setEdat();
+                p5.setNumAstral();
             }
         });
 
