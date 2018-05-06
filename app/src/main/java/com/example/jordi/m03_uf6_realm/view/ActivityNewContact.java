@@ -126,7 +126,7 @@ public class ActivityNewContact extends AppCompatActivity implements DatePickerD
                             p1.setCognom(cognoms.getText().toString());
                             p1.setDataNaixement(birthdate);
                             p1.setEdat();
-                            p1.setNumAstral();
+                            p1.setNumAstral(); //Establir nou camp
                             if (homeRadio.isChecked()){
                                 p1.setGenere("M");
                             }else{

@@ -96,11 +96,13 @@ public class MainActivity extends AppCompatActivity {
         Realm.init(this);
 
 
+        //Crear configuració de Realm
         RealmConfiguration config = new RealmConfiguration.Builder()
-                .schemaVersion(1) // Must be bumped when the schema changes
-                .migration(new MyMigration()) // Migration to run instead of throwing an exception
+                .schemaVersion(1) // Canvía a versió 1 de l'esquema
+                .migration(new MyMigration()) // Classe que s'encarregarà de la migració
                 .build();
 
+        //Assignar configuració com a predeterminada
         Realm.setDefaultConfiguration(config);
 
         realm = Realm.getDefaultInstance();
@@ -115,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 p1.setGenere("M");
                 p1.setDataNaixement(new GregorianCalendar(1992, 12, 30).getTime());
                 p1.setEdat();
-                p1.setNumAstral();
+                p1.setNumAstral(); //Establir el nou camp
 
                 Persona p2 = realm.createObject(Persona.class,"6432545F");
                 p2.setNom("Alejandro");

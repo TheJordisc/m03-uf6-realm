@@ -20,8 +20,12 @@ public class Persona extends RealmObject implements Serializable {
     private String cognom;
     private String genere;
     private Date dataNaixement;
+
+    //Anotació per a indexar el camp
     @Index
     private int edat;
+
+    //Camp nou afegit
     private int numAstral;
 
     public Persona() {
@@ -99,11 +103,12 @@ public class Persona extends RealmObject implements Serializable {
         return numAstral;
     }
 
+    //Setter de numAstral que utilitza métode estàtic
     public void setNumAstral() {
-
         this.numAstral = calculateNumAstral(getDataNaixement());
     }
 
+    //Calcula número astral
     public static int calculateNumAstral(Date date) {
         DateFormat df = new SimpleDateFormat("ddMMyyyy", Locale.getDefault());
         String reportDate = df.format(date);
